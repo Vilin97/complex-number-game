@@ -25,7 +25,7 @@ namespace complex
 -- sending the real number r to the complex number ⟨r, 0⟩
 
 /-- The canonical map from ℝ to ℂ. -/
-def of_real (r : ℝ) : ℂ := sorry
+def of_real (r : ℝ) : ℂ := ⟨r,0⟩
 
 /-
 We make this map into a *coercion*, which means that if `(r : ℝ)` is a real
@@ -45,17 +45,21 @@ results like r^2=2*s for reals `r` and `s`, if it knows that
 but involve "invisible maps" in Lean
 -/
 
-@[simp, norm_cast] lemma of_real_re (r : ℝ) : (r : ℂ).re = r := sorry
-@[simp, norm_cast] lemma of_real_im (r : ℝ) : (r : ℂ).im = 0 := sorry
+@[simp, norm_cast] lemma of_real_re (r : ℝ) : (r : ℂ).re = r := rfl
+@[simp, norm_cast] lemma of_real_im (r : ℝ) : (r : ℂ).im = 0 := rfl
 
 -- The map from the reals to the complexes is injective, something we
 -- write in iff form so `simp` can use it; `simp` also works on `iff` goals.
 
-@[simp, norm_cast] theorem of_real_inj {r s : ℝ} : (r : ℂ) = s ↔ r = s := sorry
+local attribute [simp] ext_iff
+
+@[simp, norm_cast] theorem of_real_inj {r s : ℝ} : (r : ℂ) = s ↔ r = s := 
+begin
+  simp,
+end
 
 -- what does norm_cast do?? Here are two examples of usage:
 
-/-
 
 example (r s : ℝ) (h : (r : ℂ) = s) : r = s :=
 begin
@@ -69,7 +73,6 @@ begin
   exact h,
 end
 
--/
 
 /-
 We now go through all the basic constants and constructions we've defined so
@@ -79,35 +82,47 @@ to this new function.
 
 /-! ## zero -/
 
-@[simp, norm_cast] lemma of_real_zero : ((0 : ℝ) : ℂ) = 0 := sorry
+@[simp, norm_cast] lemma of_real_zero : ((0 : ℝ) : ℂ) = 0 := 
+begin
+  simp,
+end
 
-@[simp] theorem of_real_eq_zero {r : ℝ} : (r : ℂ) = 0 ↔ r = 0 := sorry
+@[simp] theorem of_real_eq_zero {r : ℝ} : (r : ℂ) = 0 ↔ r = 0 := 
+begin
+  simp,
+end
 
-theorem of_real_ne_zero {r : ℝ} : (r : ℂ) ≠ 0 ↔ r ≠ 0 := sorry
+theorem of_real_ne_zero {r : ℝ} : (r : ℂ) ≠ 0 ↔ r ≠ 0 := 
+begin
+  simp,
+end
 
 /-! ## one -/
 
-@[simp, norm_cast] lemma of_real_one : ((1 : ℝ) : ℂ) = 1 := sorry
+@[simp, norm_cast] lemma of_real_one : ((1 : ℝ) : ℂ) = 1 := 
+begin
+  simp,
+end
 
 /-! ## add -/
 
 @[simp, norm_cast] lemma of_real_add (r s : ℝ) : ((r + s : ℝ) : ℂ) = r + s :=
 begin
-  sorry
+  simp,
 end
 
 /-! ## neg -/
 
 @[simp, norm_cast] lemma of_real_neg (r : ℝ) : ((-r : ℝ) : ℂ) = -r :=
 begin
-  sorry
+  simp,
 end
 
 /-! ## mul -/
 
 @[simp, norm_cast] lemma of_real_mul (r s : ℝ) : ((r * s : ℝ) : ℂ) = r * s :=
 begin
-  sorry
+  simp,
 end
 
 /-- The canonical ring homomorphism from ℝ to ℂ -/
@@ -138,9 +153,15 @@ as (↑(37 : ℝ) : ℂ) = 37 : ℂ (i.e. coercion commutes with numerals)
 -/
 
 @[simp, norm_cast] lemma of_real_bit0 (r : ℝ) : ((bit0 r : ℝ) : ℂ) = bit0 r :=
-sorry
+begin
+  unfold bit0,
+  simp,
+end
 @[simp, norm_cast] lemma of_real_bit1 (r : ℝ) : ((bit1 r : ℝ) : ℂ) = bit1 r :=
-sorry
+begin
+  unfold bit1 bit0,
+  simp,
+end
 
 end complex
 

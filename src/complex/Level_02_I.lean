@@ -25,7 +25,7 @@ tactics in the `begin end` block.
 namespace complex
 
 /-- complex.I is the square root of -1 above the imaginary axis -/
-def I : ℂ := sorry
+def I : ℂ := ⟨0,1⟩
 
 /-
 
@@ -37,24 +37,36 @@ def I : ℂ := sorry
 /-- re(I) = 0 -/
 @[simp] lemma I_re : re(I) = 0 :=
 begin
-  sorry
+  unfold I,
 end
 
 /-- im(I) = 1 -/
 @[simp] lemma I_im : im(I) = 1 :=
 begin
-  sorry
+  refl,
 end
 
 /-- I*I = -1 -/
 @[simp] lemma I_mul_I : I * I = -1 :=
 begin
-  sorry
+  ext,
+  simp,
+  simp,
 end
 
-lemma mk_eq_add_mul_I (a b : ℝ) : (⟨a, b⟩ : ℂ) = a + b * I := sorry
+lemma mk_eq_add_mul_I (a b : ℝ) : (⟨a, b⟩ : ℂ) = a + b * I := 
+begin
+  ext,
+  simp,
+  simp,
+end
 
-@[simp] lemma re_add_im (z : ℂ) : (z.re : ℂ) + z.im * I = z := sorry
+@[simp] lemma re_add_im (z : ℂ) : (z.re : ℂ) + z.im * I = z := 
+begin
+  ext,
+  simp,
+  simp,
+end
 
 
 /-
@@ -67,7 +79,11 @@ lemma mk_eq_add_mul_I (a b : ℝ) : (⟨a, b⟩ : ℂ) = a + b * I := sorry
 /-- I is non-zero -/
 lemma I_ne_zero : (I : ℂ) ≠ 0 :=
 begin
-  sorry
+  intro h,
+  rw ext_iff at h,
+  unfold I at h,
+  simp * at h,
+  exact h,
 end
 
 end complex

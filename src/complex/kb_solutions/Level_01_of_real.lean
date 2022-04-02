@@ -59,7 +59,7 @@ local attribute [simp] ext_iff
 
 @[simp, norm_cast] theorem of_real_inj {r s : ℝ} : (r : ℂ) = s ↔ r = s :=
 begin
-  simp
+  simp,
 end
 
 
