@@ -25,7 +25,7 @@ namespace complex
 -- sending the real number r to the complex number ⟨r, 0⟩
 
 /-- The canonical map from ℝ to ℂ. -/
-def of_real (r : ℝ) : ℂ := sorry
+def of_real (r : ℝ) : ℂ := ⟨r, 0⟩
 
 /-
 We make this map into a *coercion*, which means that if `(r : ℝ)` is a real
@@ -45,17 +45,28 @@ results like r^2=2*s for reals `r` and `s`, if it knows that
 but involve "invisible maps" in Lean
 -/
 
-@[simp, norm_cast] lemma of_real_re (r : ℝ) : (r : ℂ).re = r := sorry
-@[simp, norm_cast] lemma of_real_im (r : ℝ) : (r : ℂ).im = 0 := sorry
+@[simp, norm_cast] lemma of_real_re (r : ℝ) : (r : ℂ).re = r := rfl
+@[simp, norm_cast] lemma of_real_im (r : ℝ) : (r : ℂ).im = 0 := rfl
 
 -- The map from the reals to the complexes is injective, something we
 -- write in iff form so `simp` can use it; `simp` also works on `iff` goals.
 
-@[simp, norm_cast] theorem of_real_inj {r s : ℝ} : (r : ℂ) = s ↔ r = s := sorry
+@[simp, norm_cast] theorem of_real_inj {r s : ℝ} : (r : ℂ) = s ↔ r = s := 
+begin
+  split,
+  {intro h,
+  cases h,
+  refl},
+  {intro h,
+  ext,
+  simp,
+  exact h,
+  simp},
+end
 
 -- what does norm_cast do?? Here are two examples of usage:
 
-/-
+
 
 example (r s : ℝ) (h : (r : ℂ) = s) : r = s :=
 begin
@@ -69,7 +80,7 @@ begin
   exact h,
 end
 
--/
+
 
 /-
 We now go through all the basic constants and constructions we've defined so
@@ -79,21 +90,32 @@ to this new function.
 
 /-! ## zero -/
 
-@[simp, norm_cast] lemma of_real_zero : ((0 : ℝ) : ℂ) = 0 := sorry
+@[simp, norm_cast] lemma of_real_zero : ((0 : ℝ) : ℂ) = 0 := rfl
 
-@[simp] theorem of_real_eq_zero {r : ℝ} : (r : ℂ) = 0 ↔ r = 0 := sorry
+@[simp] theorem of_real_eq_zero {r : ℝ} : (r : ℂ) = 0 ↔ r = 0 := 
+begin
+  norm_cast,
+end
 
-theorem of_real_ne_zero {r : ℝ} : (r : ℂ) ≠ 0 ↔ r ≠ 0 := sorry
+theorem of_real_ne_zero {r : ℝ} : (r : ℂ) ≠ 0 ↔ r ≠ 0 := 
+begin
+  norm_cast,
+end
 
 /-! ## one -/
 
-@[simp, norm_cast] lemma of_real_one : ((1 : ℝ) : ℂ) = 1 := sorry
+@[simp, norm_cast] lemma of_real_one : ((1 : ℝ) : ℂ) = 1 := 
+begin
+  refl,
+end
 
 /-! ## add -/
 
 @[simp, norm_cast] lemma of_real_add (r s : ℝ) : ((r + s : ℝ) : ℂ) = r + s :=
 begin
-  sorry
+  ext,
+  simp,
+  simp,
 end
 
 /-! ## neg -/
